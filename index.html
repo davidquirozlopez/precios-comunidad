@@ -1,0 +1,796 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Planes y Precios Black Friday | Maestríanimal</title>
+  
+  <!-- Importación de fuentes de Google Fonts (Montserrat y Open Sans) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;600;700;800;900&family=Open+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    /* ==========================================================================
+       VARIABLES DE DISEÑO Y PALETA DE COLORES
+       ========================================================================== */
+    :root {
+      --primary-color: #25004D;      /* Púrpura principal Maestríanimal */
+      --bf-color: #830000;           /* Rojo vino oficial Black Friday */
+      --bf-color-hover: #630000;     /* Rojo vino oscuro para estados hover */
+      --bf-bg-soft: #fff5f5;         /* Fondo sutil para etiquetas Black Friday */
+      --accent-color: #e58b45;       /* Naranja secundario */
+      --whatsapp-color: #EDE4F7;     /* Lila suave para botón WhatsApp */
+      --text-main: #2d2d2d;
+      --text-light: #666666;
+      --bg-card: #ffffff;
+      --border-light: #eaeaea;
+    }
+
+    /* ==========================================================================
+       RESET Y CONFIGURACIÓN PARA IFRAME (WIX / NETLIFY)
+       ========================================================================== */
+    *, *::before, *::after {
+      box-sizing: border-box;
+    }
+
+    html, body {
+      margin: 0;
+      padding: 0;
+      width: 100%;
+      background-color: transparent; /* Transparente para integrarse con el fondo de Wix */
+      font-family: 'Open Sans', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      color: var(--text-main);
+      -webkit-font-smoothing: antialiased;
+      -webkit-tap-highlight-color: transparent;
+      overflow-x: hidden; /* Evita scroll horizontal en móviles */
+    }
+
+    /* ==========================================================================
+       BANNER SUPERIOR BLACK FRIDAY
+       ========================================================================== */
+    .bf-top-banner {
+      background-color: var(--bf-color);
+      color: #ffffff;
+      text-align: center;
+      padding: 12px 16px;
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 800;
+      font-size: 0.9rem;
+      letter-spacing: 0.8px;
+      text-transform: uppercase;
+      border-radius: 10px;
+      margin-bottom: 28px;
+      box-shadow: 0 4px 14px rgba(131, 0, 0, 0.25);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .bf-top-banner span.bf-pill {
+      background-color: #ffffff;
+      color: var(--bf-color);
+      padding: 3px 10px;
+      border-radius: 20px;
+      font-size: 0.78rem;
+      font-weight: 900;
+    }
+
+    /* ==========================================================================
+       CONTENEDOR PRINCIPAL
+       ========================================================================== */
+    .pricing-wrapper {
+      max-width: 1120px;
+      margin: 0 auto;
+      padding: 20px 16px 40px 16px;
+    }
+
+    /* ==========================================================================
+       INTERRUPTOR DE FACTURACIÓN (MENSUAL / TRIMESTRAL / SEMESTRAL)
+       ========================================================================== */
+    .billing-toggle-wrapper {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin-bottom: 42px;
+    }
+
+    .billing-toggle {
+      display: flex;
+      justify-content: center;
+      background: #ffffff;
+      border: 2px solid var(--primary-color);
+      border-radius: 35px;
+      padding: 5px;
+      width: 100%;
+      max-width: 460px;
+      box-shadow: 0 4px 12px rgba(37, 0, 77, 0.06);
+    }
+
+    .toggle-btn {
+      font-family: 'Montserrat', sans-serif;
+      flex: 1;
+      border: none;
+      background: transparent;
+      padding: 10px 12px;
+      border-radius: 30px;
+      cursor: pointer;
+      font-weight: 700;
+      font-size: 0.88rem;
+      color: var(--text-light);
+      transition: all 0.25s ease;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      line-height: 1.2;
+    }
+
+    .toggle-btn:hover:not(.active) {
+      color: var(--primary-color);
+    }
+
+    .toggle-btn.active {
+      background: var(--primary-color);
+      color: #ffffff;
+      box-shadow: 0 4px 8px rgba(37, 0, 77, 0.2);
+    }
+
+    .toggle-subtag {
+      font-size: 0.68rem;
+      font-weight: 800;
+      color: var(--bf-color);
+      margin-top: 2px;
+      text-transform: uppercase;
+    }
+
+    .toggle-btn.active .toggle-subtag {
+      color: #ffcccc;
+    }
+
+    /* ==========================================================================
+       GRID DE TARJETAS (1 COLUMNA MÓVIL, 3 COLUMNAS ESCRITORIO >= 768PX)
+       ========================================================================== */
+    .pricing-cards {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 28px;
+      align-items: stretch;
+    }
+
+    @media (min-width: 768px) {
+      .pricing-cards {
+        grid-template-columns: repeat(3, 1fr);
+        gap: 22px;
+      }
+      .toggle-btn {
+        font-size: 0.95rem;
+        padding: 10px 18px;
+      }
+    }
+
+    /* ==========================================================================
+       ESTILOS DE TARJETA INDIVIDUAL
+       ========================================================================== */
+    .card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-light);
+      border-radius: 14px;
+      padding: 34px 22px 28px 22px;
+      display: flex;
+      flex-direction: column;
+      position: relative;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.04);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 14px 32px rgba(0, 0, 0, 0.09);
+    }
+
+    /* Tarjeta Destacada (Comunidad Profesional Black Friday) */
+    .card.popular {
+      border: 3px solid var(--bf-color);
+      box-shadow: 0 14px 34px rgba(131, 0, 0, 0.14);
+    }
+
+    /* Tarjeta Maestros */
+    .card.restricted {
+      border: 1.5px solid #d4c4e3;
+      background: #fdfcff;
+    }
+
+    /* ==========================================================================
+       INSIGNIAS SUPERIORES (BADGES)
+       ========================================================================== */
+    .badge {
+      position: absolute;
+      top: -14px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: var(--bf-color);
+      color: #ffffff;
+      padding: 5px 16px;
+      border-radius: 20px;
+      font-size: 0.78rem;
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.8px;
+      white-space: nowrap;
+      box-shadow: 0 4px 10px rgba(131, 0, 0, 0.25);
+    }
+
+    .badge-restricted {
+      background: var(--primary-color);
+      box-shadow: 0 4px 10px rgba(37, 0, 77, 0.2);
+    }
+
+    /* Etiqueta interna de descuento para Maestros */
+    .bf-inline-badge {
+      display: inline-block;
+      background-color: var(--bf-color);
+      color: #ffffff;
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 800;
+      font-size: 0.75rem;
+      padding: 4px 12px;
+      border-radius: 20px;
+      text-transform: uppercase;
+      letter-spacing: 0.6px;
+      margin: 0 auto 12px auto;
+    }
+
+    /* ==========================================================================
+       ENCABEZADO DE TARJETA
+       ========================================================================== */
+    .card-header {
+      text-align: center;
+    }
+
+    .card-header h3 {
+      font-family: 'Montserrat', sans-serif;
+      margin: 0 0 10px 0;
+      font-size: 1.38rem;
+      font-weight: 800;
+      color: var(--primary-color);
+    }
+
+    .ideal-for {
+      font-size: 0.86rem;
+      color: var(--text-light);
+      text-align: center;
+      margin: 0 0 18px 0;
+      min-height: 58px;
+      line-height: 1.45;
+    }
+
+    /* ==========================================================================
+       SECCIÓN DE PRECIOS Y DESCUENTO BLACK FRIDAY
+       ========================================================================== */
+    .card-price {
+      text-align: center;
+      margin-bottom: 22px;
+      min-height: 128px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .price-original-row {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 0.9rem;
+      color: #888888;
+      margin-bottom: 4px;
+      font-weight: 600;
+    }
+
+    .price-strikethrough {
+      text-decoration: line-through;
+      color: #999999;
+      font-weight: 700;
+    }
+
+    .price-main-row {
+      display: flex;
+      align-items: baseline;
+      justify-content: center;
+      gap: 3px;
+      flex-wrap: wrap;
+    }
+
+    .currency {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 1.1rem;
+      font-weight: 800;
+      color: var(--text-main);
+      align-self: flex-start;
+      margin-top: 6px;
+    }
+
+    .amount {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 3.1rem;
+      font-weight: 900;
+      line-height: 1;
+      color: var(--text-main);
+    }
+
+    .amount.bf-price {
+      color: var(--bf-color);
+    }
+
+    .period {
+      font-size: 0.92rem;
+      font-weight: 700;
+      color: var(--text-main);
+    }
+
+    .renewal-note {
+      font-size: 0.78rem;
+      color: var(--text-light);
+      margin-top: 6px;
+      font-weight: 600;
+    }
+
+    .savings-tag {
+      font-family: 'Montserrat', sans-serif;
+      background-color: var(--bf-bg-soft);
+      color: var(--bf-color);
+      border: 1px solid rgba(131, 0, 0, 0.2);
+      font-weight: 800;
+      font-size: 0.76rem;
+      padding: 3px 10px;
+      border-radius: 12px;
+      margin-top: 8px;
+      display: inline-block;
+    }
+
+    /* ==========================================================================
+       BOTONES DE ACCIÓN (CTA) Y MICROCOPY
+       ========================================================================== */
+    .card-action {
+      text-align: center;
+      margin-bottom: 24px;
+    }
+
+    .btn {
+      font-family: 'Montserrat', sans-serif;
+      display: block;
+      width: 100%;
+      padding: 14px 12px;
+      border-radius: 10px;
+      text-decoration: none;
+      font-weight: 800;
+      font-size: 0.94rem;
+      text-align: center;
+      transition: all 0.25s ease;
+      cursor: pointer;
+    }
+
+    .btn-outline {
+      background: transparent;
+      border: 2px solid var(--primary-color);
+      color: var(--primary-color);
+    }
+
+    .btn-outline:hover {
+      background: var(--primary-color);
+      color: #ffffff;
+    }
+
+    /* Botón destacado Black Friday */
+    .btn-bf {
+      background: var(--bf-color);
+      color: #ffffff;
+      border: 2px solid var(--bf-color);
+      box-shadow: 0 6px 16px rgba(131, 0, 0, 0.25);
+    }
+
+    .btn-bf:hover {
+      background: var(--bf-color-hover);
+      border-color: var(--bf-color-hover);
+      transform: translateY(-1px);
+    }
+
+    /* Botón WhatsApp Maestros */
+    .btn-whatsapp {
+      background: var(--whatsapp-color);
+      color: var(--primary-color);
+      border: 2px solid var(--primary-color);
+    }
+
+    .btn-whatsapp:hover {
+      background: var(--primary-color);
+      color: #ffffff;
+    }
+
+    .microcopy {
+      font-size: 0.76rem;
+      color: var(--text-light);
+      margin-top: 10px;
+      margin-bottom: 0;
+      line-height: 1.4;
+    }
+
+    /* ==========================================================================
+       LISTA DE CARACTERÍSTICAS
+       ========================================================================== */
+    .card-features {
+      flex-grow: 1;
+      border-top: 1px solid var(--border-light);
+      padding-top: 20px;
+    }
+
+    .features-title {
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 800;
+      margin: 0 0 15px 0;
+      font-size: 0.92rem;
+      color: var(--primary-color);
+    }
+
+    .card-features ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    .card-features li {
+      font-size: 0.85rem;
+      margin-bottom: 12px;
+      padding-left: 26px;
+      position: relative;
+      line-height: 1.45;
+      color: var(--text-main);
+    }
+
+    .card-features li::before {
+      content: "✓";
+      position: absolute;
+      left: 0;
+      top: 2px;
+      color: #ffffff;
+      background: var(--primary-color);
+      width: 17px;
+      height: 17px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 10px;
+      font-weight: bold;
+    }
+
+    .card.popular .card-features li::before {
+      background: var(--bf-color);
+    }
+
+    /* ==========================================================================
+       ACLARACIONES INFERIORES (MAESTROS Y CONDICIONES BLACK FRIDAY)
+       ========================================================================== */
+    .maestros-disclaimer {
+      margin-top: 36px;
+      padding: 22px;
+      background: #faf8fc;
+      border-left: 4px solid var(--primary-color);
+      border-radius: 8px;
+      font-size: 0.88rem;
+      line-height: 1.55;
+      color: var(--text-main);
+    }
+
+    .maestros-disclaimer h4 {
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 800;
+      margin: 0 0 8px 0;
+      color: var(--primary-color);
+      font-size: 0.98rem;
+    }
+
+    .maestros-disclaimer p {
+      margin: 0 0 10px 0;
+    }
+
+    .maestros-disclaimer p:last-child {
+      margin-bottom: 0;
+    }
+
+    .bf-terms-highlight {
+      color: var(--bf-color);
+      font-weight: 700;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="pricing-wrapper">
+    
+    <!-- Banner Superior Black Friday -->
+    <div class="bf-top-banner" role="region" aria-label="Promoción Black Friday">
+      <span class="bf-pill">OFERTA LIMITADA</span>
+      <span>BLACK FRIDAY • 40% DE DESCUENTO EN TU PRIMER PERÍODO</span>
+    </div>
+
+    <!-- Interruptor de Facturación -->
+    <div class="billing-toggle-wrapper">
+      <div class="billing-toggle" role="tablist" aria-label="Frecuencia de facturación">
+        <button type="button" class="toggle-btn active" data-period="mensual" role="tab" aria-selected="true">
+          <span>Mensual</span>
+          <span class="toggle-subtag">-40% 1er mes</span>
+        </button>
+        <button type="button" class="toggle-btn" data-period="trimestral" role="tab" aria-selected="false">
+          <span>Trimestral</span>
+          <span class="toggle-subtag">Ahorra 7% + 40%</span>
+        </button>
+        <button type="button" class="toggle-btn" data-period="semestral" role="tab" aria-selected="false">
+          <span>Semestral</span>
+          <span class="toggle-subtag">Ahorra 11% + 40%</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- Contenedor de Tarjetas (3 Columnas) -->
+    <div class="pricing-cards">
+      
+      <!-- ====================================================================
+           TARJETA 1: COMUNIDAD GRATUITA
+           ==================================================================== -->
+      <article class="card">
+        <div class="card-header">
+          <h3>Comunidad Gratuita</h3>
+          <p class="ideal-for"><strong>Ideal si quieres:</strong> conocer la experiencia, conectar con el gremio y explorar antes de pagar.</p>
+        </div>
+
+        <div class="card-price">
+          <div class="price-main-row">
+            <span class="currency">USD</span>
+            <span class="amount">0</span>
+            <span class="period">/siempre</span>
+          </div>
+          <div class="renewal-note">Sin tarjeta de crédito</div>
+        </div>
+
+        <div class="card-action">
+          <a href="https://comunidad.maestrianimal.com/auth/signup?redirect=%2F" target="_blank" rel="noopener noreferrer" class="btn btn-outline">
+            Quiero registrarme gratis
+          </a>
+          <p class="microcopy">Acceso inmediato. Sin costo.</p>
+        </div>
+
+        <div class="card-features">
+          <p class="features-title">Incluye:</p>
+          <ul>
+            <li>Participar en la comunidad y discusiones (acceso básico).</li>
+            <li>Compartir oportunidades (empleo/colaboración) y ver espacios comunitarios.</li>
+            <li>Publicaciones de servicios sociales animales (perdidos, encontrados, adopción).</li>
+            <li>Ver perfiles profesionales del directorio (sin publicar el tuyo).</li>
+            <li>Participar de las discusiones de la semana.</li>
+            <li>Acceso a una selección de recursos gratuitos.</li>
+            <li>Eventos: ver el calendario y comprar acceso a eventos puntuales (pago único).</li>
+          </ul>
+        </div>
+      </article>
+
+      <!-- ====================================================================
+           TARJETA 2: COMUNIDAD PROFESIONAL (DESTACADA BLACK FRIDAY)
+           ==================================================================== -->
+      <article class="card popular">
+        <div class="badge">🔥 BLACK FRIDAY -40%</div>
+
+        <div class="card-header">
+          <h3>Comunidad Profesional</h3>
+          <p class="ideal-for"><strong>Ideal si quieres:</strong> contenido constante, recursos aplicables y comunidad con respuesta prioritaria.</p>
+        </div>
+
+        <div class="card-price">
+          <!-- Precio original tachado -->
+          <div class="price-original-row">
+            Antes: <span class="price-strikethrough dynamic-old-price" data-mensual="USD 19,99" data-trimestral="USD 55,90" data-semestral="USD 106,90">USD 19,99</span>
+          </div>
+
+          <!-- Precio con 40% de descuento -->
+          <div class="price-main-row">
+            <span class="currency">USD</span>
+            <span class="amount bf-price dynamic-price" data-mensual="11,99" data-trimestral="33,54" data-semestral="64,14">11,99</span>
+            <span class="period dynamic-period">/primer mes</span>
+          </div>
+
+          <!-- Aclaración de renovación regular -->
+          <div class="renewal-note dynamic-renewal" data-mensual="(luego USD 19,99/mes)" data-trimestral="(luego USD 55,90/trimestre)" data-semestral="(luego USD 106,90/semestre)">
+            (luego USD 19,99/mes)
+          </div>
+
+          <!-- Etiqueta de ahorro Black Friday -->
+          <div class="savings-tag dynamic-savings" data-mensual="40% OFF primer mes" data-trimestral="40% OFF 1er trimestre + 7% base" data-semestral="40% OFF 1er semestre + 11% base">
+            40% OFF primer mes
+          </div>
+        </div>
+
+        <div class="card-action">
+          <a href="https://buy.stripe.com/4gM4gz70V9kQ6Pqbwh6kg05"
+             target="_blank"
+             rel="noopener noreferrer"
+             class="btn btn-bf dynamic-link"
+             data-link-mensual="https://buy.stripe.com/4gM4gz70V9kQ6Pqbwh6kg05"
+             data-link-trimestral="https://buy.stripe.com/fZu7sL70V2Ws5Lm1VH6kg06"
+             data-link-semestral="https://buy.stripe.com/aFabJ13OJ2Ws5Lm1VH6kg07">
+            Aprovechar 40% OFF
+          </a>
+          <p class="microcopy">
+            <strong>40% OFF solo en tu primer período</strong>, luego renueva al valor regular.<br>
+            Pago inmediato = Acceso inmediato. Cancela cuando quieras.
+          </p>
+        </div>
+
+        <div class="card-features">
+          <p class="features-title">Todo lo del Plan Gratuito +</p>
+          <ul>
+            <li>Publicar tu perfil profesional o de emprendimiento.</li>
+            <li>Mentoría semanal en vivo: resuelve dudas y recibe orientación profesional.</li>
+            <li>Biblioteca exclusiva: recursos prácticos listos para usar.</li>
+            <li>1 evento en vivo mensual incluido + grabación hasta por 1 mes.</li>
+            <li>Aprendizaje constante con el análisis de los Casos del Mes.</li>
+            <li>Respuesta prioritaria en tus publicaciones (máx. 48h).</li>
+          </ul>
+        </div>
+      </article>
+
+      <!-- ====================================================================
+           TARJETA 3: COMUNIDAD MAESTROS (SOLO EXALUMNOS + BLACK FRIDAY)
+           ==================================================================== -->
+      <article class="card restricted">
+        <div class="badge badge-restricted">Solo Exalumnos</div>
+
+        <div class="card-header">
+          <div class="bf-inline-badge">-40% BLACK FRIDAY</div>
+          <h3>Comunidad Maestros</h3>
+          <p class="ideal-for"><strong>La opción premium</strong> para exalumnos certificados: Comunidad + Repaso académico de 1 o 2 especies.</p>
+        </div>
+
+        <div class="card-price">
+          <!-- Precio original tachado -->
+          <div class="price-original-row">
+            Antes: <span class="price-strikethrough dynamic-old-price" data-mensual="USD 39,99" data-trimestral="USD 111,90" data-semestral="USD 215,90">USD 39,99</span>
+          </div>
+
+          <!-- Precio con 40% de descuento -->
+          <div class="price-main-row">
+            <span class="currency">USD</span>
+            <span class="amount bf-price dynamic-price" data-mensual="23,99" data-trimestral="67,14" data-semestral="129,54">23,99</span>
+            <span class="period dynamic-period">/primer mes</span>
+          </div>
+
+          <!-- Aclaración de renovación regular -->
+          <div class="renewal-note dynamic-renewal" data-mensual="(luego USD 39,99/mes)" data-trimestral="(luego USD 111,90/trimestre)" data-semestral="(luego USD 215,90/semestre)">
+            (luego USD 39,99/mes)
+          </div>
+
+          <!-- Etiqueta de ahorro Black Friday -->
+          <div class="savings-tag dynamic-savings" data-mensual="40% OFF primer mes" data-trimestral="40% OFF 1er trimestre + 7% base" data-semestral="40% OFF 1er semestre + 11% base">
+            40% OFF primer mes
+          </div>
+        </div>
+
+        <div class="card-action">
+          <a href="https://wa.me/message/OVCI3GX5LWHHN1"
+             target="_blank"
+             rel="noopener noreferrer"
+             class="btn btn-whatsapp dynamic-link"
+             data-link-mensual="https://wa.me/message/OVCI3GX5LWHHN1"
+             data-link-trimestral="https://wa.me/message/OVCI3GX5LWHHN1"
+             data-link-semestral="https://wa.me/message/OVCI3GX5LWHHN1">
+            Validar por WhatsApp (-40%)
+          </a>
+          <p class="microcopy">
+            Requiere validación previa de certificación.<br>
+            Aplica 40% OFF en el primer período; renueva al precio regular.
+          </p>
+        </div>
+
+        <div class="card-features">
+          <p class="features-title">Todo lo del Plan Profesional +</p>
+          <ul>
+            <li>Acceso a los videos académicos de repaso de las especies en las que ya estás certificado/a.</li>
+          </ul>
+        </div>
+      </article>
+
+    </div>
+
+    <!-- Aclaraciones Inferiores (Maestros + Condiciones Black Friday) -->
+    <div class="maestros-disclaimer">
+      <h4>⚠️ Aclaraciones importantes sobre los planes y promoción Black Friday:</h4>
+      <p>
+        <span class="bf-terms-highlight">Condiciones Black Friday (40% OFF):</span> El descuento del 40% aplica exclusivamente sobre el <strong>primer período de facturación</strong> contratado (primer mes en plan mensual, primer trimestre en plan trimestral o primer semestre en plan semestral) para los planes <em>Comunidad Profesional</em> y <em>Comunidad Maestros</em>. A partir del segundo período, la suscripción se renovará automáticamente al valor regular vigente.
+      </p>
+      <p>
+        <strong>Sobre Comunidad Maestros:</strong> Estos planes son exclusivos para exalumnos de la Academia y diplomados Maestríanimal. <strong>No incluyen evaluaciones, materiales complementarios ni nuevos certificados</strong> (son solo para repasar lo ya certificado). Si quieres aprender sobre una especie nueva, ese contenido se toma directamente en la Academia. Puedes cambiar de plan más adelante; el cambio se hará efectivo al finalizar el período pagado. Para más información, revisa nuestros <a href="https://www.maestrianimal.com/terminos-y-condiciones" target="_blank" rel="noopener noreferrer" style="color: #25004D; text-decoration: underline; font-weight: bold;">Términos y Condiciones</a>.
+      </p>
+    </div>
+
+  </div>
+
+  <!-- ========================================================================
+       LÓGICA JAVASCRIPT SIN DEPENDENCIAS EXTERNAS
+       ======================================================================== -->
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      try {
+        const toggleBtns = document.querySelectorAll('.toggle-btn');
+        const dynamicOldPrices = document.querySelectorAll('.dynamic-old-price');
+        const dynamicPrices = document.querySelectorAll('.dynamic-price');
+        const dynamicPeriods = document.querySelectorAll('.dynamic-period');
+        const dynamicRenewals = document.querySelectorAll('.dynamic-renewal');
+        const dynamicSavings = document.querySelectorAll('.dynamic-savings');
+        const dynamicLinks = document.querySelectorAll('.dynamic-link');
+
+        // Mapa de textos para el primer período con descuento
+        const periodLabels = {
+          mensual: '/primer mes',
+          trimestral: '/primer trimestre',
+          semestral: '/primer semestre'
+        };
+
+        toggleBtns.forEach(function (btn) {
+          btn.addEventListener('click', function () {
+            // Actualizar estado visual y accesible de los botones
+            toggleBtns.forEach(function (b) {
+              b.classList.remove('active');
+              b.setAttribute('aria-selected', 'false');
+            });
+            this.classList.add('active');
+            this.setAttribute('aria-selected', 'true');
+
+            const period = this.getAttribute('data-period');
+            const periodText = periodLabels[period] || '/primer mes';
+
+            // Actualizar precios tachados originales
+            dynamicOldPrices.forEach(function (el) {
+              const oldVal = el.getAttribute('data-' + period);
+              if (oldVal) el.textContent = oldVal;
+            });
+
+            // Actualizar precios con 40% de descuento
+            dynamicPrices.forEach(function (el) {
+              const newVal = el.getAttribute('data-' + period);
+              if (newVal) el.textContent = newVal;
+            });
+
+            // Actualizar etiqueta del período (/primer mes, /primer trimestre, /primer semestre)
+            dynamicPeriods.forEach(function (el) {
+              el.textContent = periodText;
+            });
+
+            // Actualizar nota de renovación al precio regular
+            dynamicRenewals.forEach(function (el) {
+              const renewalVal = el.getAttribute('data-' + period);
+              if (renewalVal) el.textContent = renewalVal;
+            });
+
+            // Actualizar etiquetas de ahorro
+            dynamicSavings.forEach(function (el) {
+              const savingsVal = el.getAttribute('data-' + period);
+              if (savingsVal) el.textContent = savingsVal;
+            });
+
+            // Actualizar enlaces de pago / WhatsApp según el período seleccionado
+            dynamicLinks.forEach(function (linkEl) {
+              const newUrl = linkEl.getAttribute('data-link-' + period);
+              if (newUrl) {
+                linkEl.setAttribute('href', newUrl);
+              }
+            });
+          });
+        });
+      } catch (error) {
+        console.error('Error al inicializar el selector de precios:', error);
+      }
+    });
+  </script>
+</body>
+</html>
